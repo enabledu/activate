@@ -1,1 +1,1 @@
-import router
+import activate.web.fastapi.app

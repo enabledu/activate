@@ -1,1 +1,1 @@
-import fastapi
+import activate.web.fastapi
