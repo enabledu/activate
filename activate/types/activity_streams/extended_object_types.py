@@ -15,24 +15,27 @@ class Relationship(Object):
     object: Object | Link
 
     relationship: Object
-    
+
 
 class Article(Object):
     type: AnyUrl = "Article"
-    
-    
+
+
 class Document(Object):
     type: AnyUrl = "Document"
-    
-    
+
+
 class Audio(Document):
     type: AnyUrl = "Audio"
-    
-    
+
+
 class Video(Document):
     type: AnyUrl = "Video"
-    
-    
+
+
+class Image(Document):
+    type: AnyUrl = "Video"
+
 class Note(Object):
     type: AnyUrl = "Note"
 
@@ -41,9 +44,10 @@ class Page(Document):
     """
     Represents a web page
     """
+
     type: AnyUrl = "Page"
-    
-    
+
+
 class Event(Object):
     type: AnyUrl = "Event"
 
@@ -61,12 +65,13 @@ class Place(Object):
     # By default it is meters.
     # How to validate it is a unit?
     units: str = "m"
-    
+
 
 class Mention(Link):
     """
     A specialized Link that represents an @mention.
     """
+
     type: AnyUrl = "Mention"
 
 
@@ -82,6 +87,7 @@ class Tombstone(Object):
     It can be used in Collections to signify that
     there used to be an object at this position, but it has been deleted.
     """
+
     type: AnyUrl = "Tombstone"
 
     formerType: Object
