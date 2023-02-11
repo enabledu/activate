@@ -2,11 +2,12 @@ from datetime import datetime
 
 from pydantic import AnyUrl
 
+
 from activate.types.activity_streams.core_types import (
     Activity,
     IntransitiveActivity,
     Object,
-    Link
+    Link,
 )
 
 
@@ -26,7 +27,11 @@ class Arrive(Activity):
     type: AnyUrl = "Arrive"
 
 
-class Block("Ignore"):
+class Ignore(Activity):
+    type: AnyUrl = "Ignore"
+
+
+class Block(Ignore):
     type: AnyUrl = "Block"
 
 
@@ -50,11 +55,11 @@ class Follow(Activity):
     type: AnyUrl = "Follow"
 
 
-class Ignore(Activity):
-    type: AnyUrl = "Ignore"
+class Offer(Activity):
+    type: AnyUrl = "Offer"
 
 
-class Invite("Offer"):
+class Invite(Offer):
     type: AnyUrl = "Invite"
 
 
@@ -68,63 +73,59 @@ class Leave(Activity):
 
 class Like(Activity):
     type: AnyUrl = "Like"
-    
-    
+
+
 class Listen(Activity):
     type: AnyUrl = "Listen"
-    
-    
+
+
 class Move(Activity):
     type: AnyUrl = "Move"
-    
-    
-class Offer(Activity):
-    type: AnyUrl = "Offer"
-    
-    
+
+
 class Question(IntransitiveActivity):
     type: AnyUrl = "Question"
 
     # oneOf and anyOf must NOT exist together
-    #FIXME: how to validate this?
-    oneOf: list[Object | Link] | Object | Link
-    anyOf: list[Object | Link] | Object | Link
+    # FIXME: how to validate this?
+    # oneOf: list[Object | Link] | Object | Link
+    # anyOf: list[Object | Link] | Object | Link
 
     # closed can also be a generic object as per the vocabulary. HOW?
-    closed: datetime | bool
-    
-    
+    # closed: datetime | bool
+
+
 class Reject(Activity):
     type: AnyUrl = "Reject"
-    
-    
+
+
 class Read(Activity):
     type: AnyUrl = "Read"
-    
-    
+
+
 class Remove(Activity):
     type: AnyUrl = "Remove"
-    
-    
+
+
 class TentativeReject(Reject):
     type: AnyUrl = "TentativeReject"
-    
-    
+
+
 class TentativeAccept(Accept):
     type: AnyUrl = "TentativeAccept"
-    
-  
+
+
 class Travel(IntransitiveActivity):
-    type: AnyUrl = "Travel"  
-    
-    
+    type: AnyUrl = "Travel"
+
+
 class Undo(Activity):
     type: AnyUrl = "Undo"
-    
-    
+
+
 class Update(Activity):
     type: AnyUrl = "Update"
-    
-    
+
+
 class View(Activity):
     type: AnyUrl = "View"
