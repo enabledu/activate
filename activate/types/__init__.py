@@ -1,1 +1,1 @@
-import activity_streams
+import activate.types.activity_streams
