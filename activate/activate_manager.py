@@ -1,5 +1,9 @@
+import functools
 from typing import Callable
 
+from fastapi import HTTPException
+
+from activate.types.activity_streams.core_types import Activity
 
 activate_manager: "ActivateManager"
 
@@ -18,24 +22,19 @@ class ActivateManager:
         """
         Called by the web adapter to resolve activities
         """
-        # TODO: check the schema for a registered activity that matches the requested one
-        # TODO: if so, call it
-        if self.schema.get(activity):
-            callable = self.schema[activity]
-            callable()
+        if self.schema[Activity]:
+            return await self.schema[Activity](activity)
+        else:
+            raise HTTPException(status_code=404, detail="Activity can NOT be handled")
 
     def resolver(self, resolver_function):
         """
         A decorator used by the package user to register custom resolvers for activities
         """
-
-        def wrapper(activity: str):
-            # TODO: check that the first argument to the function is an activity
-            # TODO: if so, register the resolver function in schema
-
-            self.schema[activity] = resolver_function
-
-            return resolver_function
+        @functools.wraps(resolver_function)
+        async def wrapper(activity: Activity):
+            self.schema[Activity] = resolver_function
+            return resolver_function(activity)
 
         return wrapper
 
